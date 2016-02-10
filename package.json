@@ -1,7 +1,7 @@
 {
   "name": "redux-kefir",
   "version": "0.1.0",
-  "description": "Create observable projections of Redux state and dispatch Kefir observables as actions",
+  "description": "Kefir bindings for Redux",
   "main": "dist/redux-kefir.js",
   "jsnext:main": "src/index.js",
   "author": "Rudolfs Vikmanis <rudolfs.vikmanis@gmail.com> (https://github.com/rvikmanis)",
