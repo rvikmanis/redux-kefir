@@ -14,7 +14,7 @@ npm install --save redux-kefir
 
 ### *createProjection(store: [ReduxStore](http://redux.js.org/docs/basics/Store.html)): [KefirProperty](https://rpominov.github.io/kefir/#about-observables)*
 
-Creates a continuous state projection from store.
+Creates a Kefir observable of the store's state over time.
 
 #### Usage
 
@@ -26,33 +26,7 @@ let store = createStore(reducer)
 let stateProjection = createProjection(store)
 ```
 
-Because projections are just Kefir properties,
-you can use the full power of Kefir.  
-Consult the [API documentation](https://rpominov.github.io/kefir/) to learn how.
-
-Here are some examples:
-
-###### Apply a transformation, e.g. map
-```js
-stateProjection = stateProjection.map(mapper)
-```
-
-###### Listen to changes
-```js
-stateProjection.onValue(listener)
-```
-
-###### Stop listening to changes
-```js
-stateProjection.offValue(listener)
-```
-
-###### Combine with other observables
-```js
-import { combine } from 'kefir'
-
-let combined = combine([stateProjection, other])
-```
+Use Kefir's [extensive API](https://rpominov.github.io/kefir/) to manipulate `stateProjection`.
 
 ---
 
@@ -91,4 +65,9 @@ store.dispatch({
 })
 ```
 
-*Note: both examples have the same outcome*
+Note that both examples do the same thing:
+
+> at **_t_ + 0.05s** dispatch `{type: "count", payload: 1}`,  
+> at **_t_ + 0.10s** dispatch `{type: "count", payload: 2}`,  
+> at **_t_ + 0.15s** dispatch `{type: "count", payload: 3}`,  
+> then end.
