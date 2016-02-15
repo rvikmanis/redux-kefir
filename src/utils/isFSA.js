@@ -12,6 +12,7 @@ function isValidKey(key) {
 export default function isFSA(action) {
   return (
     typeof action === "object" &&
+    action !== null &&
     action.constructor === Object &&
     typeof action.type !== "undefined" &&
     Object.keys(action).every(isValidKey)
