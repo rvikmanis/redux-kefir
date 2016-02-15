@@ -1,6 +1,6 @@
 {
   "name": "redux-kefir",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Kefir bindings for Redux",
   "main": "dist/redux-kefir.js",
   "jsnext:main": "src/index.js",
