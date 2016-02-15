@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - "5"
+  - "4"
+addons:
+  code_climate:
+    repo_token: d101b7bb9b1513ebfb17414e952a3b758edc76a4d03d9499c1176a53891917fc
+script: npm run test:cover
+after_script:
+  - codeclimate-test-reporter < coverage/lcov.info

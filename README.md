@@ -3,6 +3,9 @@ redux-kefir
 
 Kefir bindings for Redux
 
+[![Test Coverage](https://codeclimate.com/github/rvikmanis/redux-kefir/badges/coverage.svg)](https://codeclimate.com/github/rvikmanis/redux-kefir/coverage)
+[![Build Status](https://travis-ci.org/rvikmanis/redux-kefir.svg?branch=master)](https://travis-ci.org/rvikmanis/redux-kefir)
+
 ```
 npm install --save redux-kefir
 ```
