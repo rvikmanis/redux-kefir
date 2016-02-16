@@ -8,7 +8,7 @@ function roll(plugins, bundlerOptions) {
   rollup({
     entry: 'src/index.js',
     plugins: plugins,
-    external: ['redux', 'kefir']
+    external: ['kefir']
   })
   .then(function (bundle) {
     bundle.write(bundlerOptions)
@@ -21,7 +21,6 @@ function umd(dest, sourceMap) {
     moduleName: 'ReduxKefir',
     dest: dest,
     globals: {
-      react: 'Redux',
       kefir: 'Kefir'
     },
     sourceMap: !!sourceMap
