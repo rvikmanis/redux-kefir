@@ -14,60 +14,57 @@ npm install --save redux-kefir
 
 ### *createProjection(store: [ReduxStore](http://redux.js.org/docs/basics/Store.html)): [KefirProperty](https://rpominov.github.io/kefir/#about-observables)*
 
-Creates a Kefir observable of the store's state over time.
+Creates an observable of state over time from a Redux store.
+
+```js
+import { createProjection } from 'redux-kefir'
+```
 
 #### Usage
 
-```js
-import { createStore } from 'redux'
-import { createProjection } from 'redux-kefir'
+Given `store`, create a projection:
 
-let store = createStore(reducer)
+```js
 let stateProjection = createProjection(store)
 ```
 
-Use Kefir's [extensive API](https://rpominov.github.io/kefir/) to manipulate `stateProjection`.
+To do anything useful with the newly minted projection, we must use the [Kefir API](https://rpominov.github.io/kefir/).
 
 ---
 
-### *observableMiddleware(store: [ReduxStore](http://redux.js.org/docs/basics/Store.html)): Function*
+### *observableMiddleware: [ReduxMiddleware](http://redux.js.org/docs/advanced/Middleware.html)*
 
-Allows Kefir observables to be dispatched.
+Enables dispatching Kefir observables and [Flux Standard Actions](https://github.com/acdlite/flux-standard-action) that have observable payloads.
+
+```js
+import { observableMiddleware } from 'redux-kefir'
+```
 
 #### Usage
 
 ```js
-import { createStore, applyMiddleware } from 'redux'
-import { observableMiddleware } from 'redux-kefir'
-import { sequentially } from 'kefir'
-
-let store = createStore(
-  reducer,
-  applyMiddleware(observableMiddleware)
-)
+createStore = applyMiddleware(observableMiddleware)(createStore)
 ```
 
-###### Dispatch observable
+Given a `store` and an action creator `count(payload: number): FSA`, dispatch a stream of `count` actions. For clarity and DRY, we'll define a stream creator `obs`:
+
 ```js
-store.dispatch(
-  sequentially(50, [1,2,3]).map(i => ({
-    type: "count",
-    payload: i
-  }))
-)
+let obs = () => Kefir.sequentially(50, [1,2,3])
 ```
 
-###### Dispatch action with observable payload
+Dispatch new observable stream, mapping its values through the action creator:
 ```js
-store.dispatch({
-  type: "count",
-  payload: sequentially(50, [1,2,3])
-})
+store.dispatch(obs().map(count))
 ```
 
-Note that both examples do the same thing:
+Or dispatch an FSA that has observable payload, essentially, inverting control:
+```js
+store.dispatch(count(obs()))
+```
 
-> at **_t_ + 0.05s** dispatch `{type: "count", payload: 1}`,  
-> at **_t_ + 0.10s** dispatch `{type: "count", payload: 2}`,  
-> at **_t_ + 0.15s** dispatch `{type: "count", payload: 3}`,  
-> then end.
+Both examples have the same outcome:  
+
+at **_t_ + 0.05s** dispatched `{type: "count", payload: 1}`,  
+at **_t_ + 0.10s** dispatched `{type: "count", payload: 2}`,  
+at **_t_ + 0.15s** dispatched `{type: "count", payload: 3}`,  
+then ended.
