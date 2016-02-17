@@ -28,7 +28,7 @@ Given `store`, create a projection:
 let stateProjection = createProjection(store)
 ```
 
-To do anything useful with the newly minted projection, we must use the [Kefir API](https://rpominov.github.io/kefir/).
+To do anything useful with the newly minted `stateProjection`, we must use the [Kefir API](https://rpominov.github.io/kefir/).
 
 ---
 
